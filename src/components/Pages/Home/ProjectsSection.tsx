@@ -1,5 +1,5 @@
 import { motion, MotionValue, Variants } from "framer-motion";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import livewire from "../../../assets/svg/Livewire.svg";
 import alpine from "../../../assets/svg/Alpine.js.svg";
 import tailwind from "../../../assets/svg/TailwindCSS.svg";
@@ -25,8 +25,6 @@ const ProjectsSection = ({
   deviceSize,
   projectTranslateX,
 }: ProjectsSectionProps) => {
-  const randomXY = useMemo(() => getRandomXY(marketVisitSVG.length), []);
-
   const refProject1 = useRef(null);
   const hasAnimatedRef = useAnimationOnce(refProject1);
 
@@ -35,8 +33,6 @@ const ProjectsSection = ({
 
   const refProject3 = useRef(null);
   const hasAnimatedRef3 = useAnimationOnce(refProject3);
-
-  // console.log("hasAnimatedRef", hasAnimatedRef);
 
   return (
     <div
@@ -57,7 +53,6 @@ const ProjectsSection = ({
           ref={refProject1}
           className="relative ml-8 flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:ml-40 md:gap-y-4 md:p-16"
           style={{
-            // height: `${Math.floor(deviceSize.height * 0.7)}px`,
             height: `${Math.floor(
               deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.8),
             )}px`,
@@ -268,7 +263,6 @@ const ProjectsSection = ({
 
 const intialProject = {
   opacity: 0,
-  x: -200,
 };
 
 const variantsProject: Variants = {
@@ -278,7 +272,6 @@ const variantsProject: Variants = {
   animate: (i: number) => {
     return {
       opacity: 1,
-      x: 0,
       transition: {
         duration: 0.5,
         delay: i * 0.05,
@@ -289,12 +282,10 @@ const variantsProject: Variants = {
 
 const intialProjectN = {
   opacity: 0,
-  x: 200,
 };
 
 const animateProject = {
   opacity: 1,
-  x: 0,
   transition: {
     duration: 0.5,
     delay: 0.5,
@@ -319,5 +310,8 @@ const marketVisitSVG = [
   sqlServer,
   sequelize,
 ];
+
+const randomXY = getRandomXY(marketVisitSVG.length);
+
 const marketVisitDesc =
   "This application is designed to assist in scheduling visits to branches and distributors and recording the results of those visits. Visit data can be uploaded in various formats, such as photos, PDFs, and Excel files, allowing for flexible information documentation. Additionally, the application is equipped with a sentiment analysis feature using a Transformer model to analyze responses from the annual survey.";
