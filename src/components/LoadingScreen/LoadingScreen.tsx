@@ -52,12 +52,14 @@ const LoadingScreen = () => {
       animate="animate"
     >
       {imgURLs.map((url: string, index: number) => {
-        const name = url
-          ? (url.split("/").pop() || "")
-              .split(".")[0]
-              .replace(/[-_]/g, " ")
-              .toUpperCase()
-          : "UNKNOWN";
+        const name =
+          url
+            ?.split("/")
+            .pop()
+            ?.split(".")[0]
+            ?.split("-")[0] // Remove suffix after the dash
+            ?.replace(/[-_]/g, " ")
+            ?.toUpperCase() || "UNKNOWN";
 
         return (
           <motion.div
