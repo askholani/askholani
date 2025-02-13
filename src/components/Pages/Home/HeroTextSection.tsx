@@ -1,5 +1,5 @@
-import { motion, MotionValue, useScroll } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 import { useScrollOpacity } from "../../../hooks";
 
 const HeroTextSection = () => {
