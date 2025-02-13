@@ -13,6 +13,7 @@ interface HeroImgSectionProps {
   heroTextSectionScroll: MotionValue<number>;
   scrollToEndSection: () => void;
   navColor: string;
+  section2InView: boolean;
 }
 
 const HeroImgSection = ({
@@ -20,6 +21,7 @@ const HeroImgSection = ({
   heroTextSectionScroll,
   scrollToEndSection,
   navColor,
+  section2InView,
 }: HeroImgSectionProps) => {
   const [displayText, setDisplayText] = useState<string[]>(
     getRandomArrays(selamatDatang, 6),
@@ -86,14 +88,7 @@ const HeroImgSection = ({
     { stiffness: 100, damping: 25 },
   );
 
-  const blurImg = useTransform(heroTextSectionScroll, [0.1, 0.5], [0, 5]);
-
-  const blurImgConv = useTransform(blurImg, (value) => {
-    if (value > 0.2) {
-      return Math.floor(value);
-    }
-    return 0;
-  });
+  // console.log("section2InView", section2InView);
 
   return (
     <>
@@ -120,7 +115,7 @@ const HeroImgSection = ({
         >
           <ArrowDownIcon
             onClick={() => {
-              console.log("hai");
+              // console.log("hai");
               return scrollToEndSection();
             }}
             className="h-12 w-12 font-extrabold md:h-20 md:w-20"
@@ -175,17 +170,17 @@ const HeroImgSection = ({
           skewX: skewXImg,
           scale: deviceSize.width > 768 ? 1 : 0.7,
           y: translateYImgSection1,
-          filter: `blur(${blurImgConv.get()}px)`,
+          filter: `blur(${section2InView ? "5px" : "0px"})`,
         }}
       >
         <div
           className={`flex h-[25rem] w-[20rem] flex-col items-center justify-center gap-y-2 border-4 border-slate-700 px-1`}
           onPointerEnter={() => {
-            console.log("pointer enter");
+            // console.log("pointer enter");
             setHovering(true);
           }}
           onPointerLeave={() => {
-            console.log("pointer leave");
+            // console.log("pointer leave");
             setHovering(false);
           }}
         >

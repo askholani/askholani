@@ -70,7 +70,7 @@ const LoadingScreen = () => {
             variants={childVariants}
             custom={index} // Passing custom index value for delay
           >
-            <div className="h-56 w-56">
+            <div className="h-40 w-40 md:h-56 md:w-56">
               <img
                 className="brightness-90"
                 src={url}
@@ -106,7 +106,7 @@ const LoadingScreen = () => {
         }}
       >
         <motion.div
-          className="h-56 w-56 bg-slate-100"
+          className="h-40 w-40 bg-slate-100 md:h-56 md:w-56"
           initial={{ scale: 0.9 }} // Gunakan 'scale' untuk awal
           animate={{
             scaleX: 10, // Skalakan sumbu X

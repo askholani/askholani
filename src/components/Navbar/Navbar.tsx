@@ -33,7 +33,7 @@ const Navbar = ({
 
   return (
     <nav
-      className={`p3b-4 fixed left-0 right-0 top-0 z-50 flex items-start justify-between pt-2 md:px-12 md:pt-8 ${
+      className={`fixed left-0 right-0 top-0 z-50 flex items-start justify-between pb-4 pt-2 md:px-12 md:pt-8 ${
         isHidden ? "opacity-100" : "hidden opacity-0"
       } text-md font-semibold md:text-2xl ${navColor} px-4`}
     >

@@ -57,6 +57,7 @@ const Home = ({
   }, [scrollToHome, scrollToStartSection]);
 
   const section2Ref = useRef<HTMLDivElement | null>(null);
+  const section2InView = useInView(section2Ref, { amount: 0.2 });
   const { scrollYProgress: scrollSection2Progres } = useScroll({
     target: section2Ref,
     offset: ["start end", "end start"],
@@ -153,6 +154,7 @@ const Home = ({
         ref={section1Ref}
       >
         <HeroImgSection
+          section2InView={section2InView}
           deviceSize={deviceSize}
           heroTextSectionScroll={scrollSection2Progres}
           navColor={navColor}
