@@ -31,6 +31,7 @@ const childVariants: Variants = {
   }),
 };
 const LoadingScreen = () => {
+  console.log("imgURLs", imgURLs);
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
@@ -52,13 +53,11 @@ const LoadingScreen = () => {
     >
       {imgURLs.map((url: string, index: number) => {
         const name = url
-          ? url
-              .split("/")
-              .pop()
-              ?.split(".")[0]
-              ?.replace(/[-_]/g, " ")
+          ? (url.split("/").pop() || "")
+              .split(".")[0]
+              .replace(/[-_]/g, " ")
               .toUpperCase()
-          : "Unknown";
+          : "UNKNOWN";
 
         return (
           <motion.div
