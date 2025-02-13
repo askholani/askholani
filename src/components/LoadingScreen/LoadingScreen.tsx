@@ -8,38 +8,38 @@ const imgURLs = [
 ];
 const screenHeight = "-" + (window.innerHeight / 2 - 100).toFixed(0) + "px";
 
+const parentVariants: Variants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 1,
+    },
+  },
+};
+
+const childVariants: Variants = {
+  initial: { y: "300px", rotate: 0 },
+  animate: (i: number) => ({
+    y: screenHeight,
+    opacity: 1,
+    rotate: i === 1 ? -12 : i === 2 ? 12 : 0,
+    transition: {
+      duration: 1,
+      ease: "easeOut",
+      delay: i * 1,
+    },
+  }),
+};
 const LoadingScreen = () => {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    const handle = requestAnimationFrame(() => setIsHidden(true));
-    const timeout = setTimeout(() => cancelAnimationFrame(handle), 4800);
+    const timeout = setTimeout(() => {
+      setIsHidden(true);
+    }, 4800);
 
     return () => clearTimeout(timeout);
   }, []);
-
-  const parentVariants: Variants = {
-    animate: {
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 1,
-      },
-    },
-  };
-
-  const childVariants: Variants = {
-    initial: { y: "300px", rotate: 0 },
-    animate: (i: number) => ({
-      y: screenHeight,
-      opacity: 1,
-      rotate: i === 1 ? -12 : i === 2 ? 12 : 0,
-      transition: {
-        duration: 1,
-        ease: "easeOut",
-        delay: i * 1,
-      },
-    }),
-  };
 
   return (
     <motion.div
@@ -72,13 +72,13 @@ const LoadingScreen = () => {
                 className="brightness-90"
                 src={url}
                 alt={`Image of ${name}`}
-                loading="eager"
-                srcSet={`${url} 1x, ${url.replace(".png", "@2x.png")} 2x`}
+                loading="lazy"
                 style={{
                   objectFit: "cover",
                   objectPosition: "center",
                   width: "100%",
                   height: "100%",
+                  transform: "scale(.9)",
                 }}
               />
             </div>
