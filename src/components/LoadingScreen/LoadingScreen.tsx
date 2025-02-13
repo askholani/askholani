@@ -6,40 +6,37 @@ const imgURLs = [
   "./images/creating.png",
   "./images/maintaining.png",
 ];
+const screenHeight = "-" + (window.innerHeight / 2 - 100).toFixed(0) + "px";
 
 const LoadingScreen = () => {
-  const [isHidden, setIsHidden] = useState(false); // State untuk mengontrol visibility
-  const screenHeight = "-" + (window.innerHeight / 2 - 100).toFixed(0) + "px";
+  const [isHidden, setIsHidden] = useState(false);
 
-  // Menghilangkan elemen setelah 4.8 detik
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsHidden(true);
-    }, 4800); // 4.8 detik dalam milidetik
+    const handle = requestAnimationFrame(() => setIsHidden(true));
+    const timeout = setTimeout(() => cancelAnimationFrame(handle), 4800);
 
-    return () => clearTimeout(timeout); // Bersihkan timeout saat komponen di-unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   const parentVariants: Variants = {
     animate: {
       transition: {
-        // staggerChildren: 0.3, // Delay between children animations
-        staggerChildren: 0.2, // Delay between children animations
-        delayChildren: 1, // Delay before starting the animation
+        staggerChildren: 0.2,
+        delayChildren: 1,
       },
     },
   };
 
   const childVariants: Variants = {
-    initial: { y: "300px", rotate: 0 }, // Initial rotate to 0 degree
+    initial: { y: "300px", rotate: 0 },
     animate: (i: number) => ({
       y: screenHeight,
       opacity: 1,
-      rotate: i === 1 ? -12 : i === 2 ? 12 : 0, // Apply different rotations based on index
+      rotate: i === 1 ? -12 : i === 2 ? 12 : 0,
       transition: {
         duration: 1,
         ease: "easeOut",
-        delay: i * 1, // Dynamically delay each child based on its index
+        delay: i * 1,
       },
     }),
   };
@@ -65,23 +62,23 @@ const LoadingScreen = () => {
 
         return (
           <motion.div
-            key={index} // Tambahkan key unik
+            key={index}
             className="absolute bottom-0 flex flex-col items-center justify-center bg-white"
             variants={childVariants}
-            custom={index} // Passing custom index value for delay
+            custom={index}
           >
             <div className="h-40 w-40 md:h-56 md:w-56">
               <img
                 className="brightness-90"
                 src={url}
-                alt={`Image of ${name}`} // alt deskriptif
-                loading="lazy"
+                alt={`Image of ${name}`}
+                loading="eager"
+                srcSet={`${url} 1x, ${url.replace(".png", "@2x.png")} 2x`}
                 style={{
                   objectFit: "cover",
                   objectPosition: "center",
                   width: "100%",
                   height: "100%",
-                  transform: "scale(.9)",
                 }}
               />
             </div>
@@ -107,14 +104,14 @@ const LoadingScreen = () => {
       >
         <motion.div
           className="h-40 w-40 bg-slate-100 md:h-56 md:w-56"
-          initial={{ scale: 0.9 }} // Gunakan 'scale' untuk awal
+          initial={{ scale: 0.9 }}
           animate={{
-            scaleX: 10, // Skalakan sumbu X
-            scaleY: 5, // Skalakan sumbu Y
+            scaleX: 10,
+            scaleY: 5,
             transition: {
-              duration: 0.5, // Durasi animasi
-              ease: "easeOut", // Kurva animasi
-              delay: (imgURLs.length + 1) * 1, // Hitung delay berdasarkan panjang array
+              duration: 0.5,
+              ease: "easeOut",
+              delay: (imgURLs.length + 1) * 1,
             },
           }}
         ></motion.div>

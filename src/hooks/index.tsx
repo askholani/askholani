@@ -9,7 +9,7 @@ export function useScrollOpacity(
     offset: ["start end", "end start"],
   });
 
-  return useTransform(scrollYProgress, [0, 0.6, 1], [0.01, 1, 0.01]);
+  return useTransform(scrollYProgress, [0, 0.4, 0.55, 0.8], [0.01, 1, 1, 0.01]);
 }
 
 export const useAnimationOnce = (ref: React.RefObject<HTMLElement>) => {
