@@ -1,5 +1,5 @@
 import { motion, MotionValue, Variants } from "framer-motion";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import livewire from "../../../assets/svg/Livewire.svg";
 import alpine from "../../../assets/svg/Alpine.js.svg";
 import tailwind from "../../../assets/svg/TailwindCSS.svg";
@@ -25,6 +25,18 @@ const ProjectsSection = ({
   deviceSize,
   projectTranslateX,
 }: ProjectsSectionProps) => {
+  const randomXY = useMemo(() => getRandomXY(marketVisitSVG.length), []);
+  const height = useMemo(
+    () =>
+      Math.floor(deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.75)),
+    [deviceSize.height],
+  );
+
+  const width = useMemo(
+    () => Math.floor(deviceSize.width * (deviceSize.width > 768 ? 0.7 : 0.8)),
+    [deviceSize.width],
+  );
+
   const refProject1 = useRef(null);
   const hasAnimatedRef = useAnimationOnce(refProject1);
 
@@ -53,12 +65,8 @@ const ProjectsSection = ({
           ref={refProject1}
           className="relative ml-8 flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:ml-40 md:gap-y-4 md:p-16"
           style={{
-            height: `${Math.floor(
-              deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.8),
-            )}px`,
-            width: `${Math.floor(
-              deviceSize.width * (deviceSize.width > 768 ? 0.7 : 0.8),
-            )}px`,
+            height,
+            width,
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
@@ -107,6 +115,7 @@ const ProjectsSection = ({
                 <motion.img
                   className="h-10 w-10 md:h-14 md:w-14"
                   drag
+                  loading="lazy"
                   dragConstraints={refProject1}
                   dragElastic={0.1}
                   src={svg}
@@ -125,12 +134,8 @@ const ProjectsSection = ({
           ref={refProject2}
           className="relative flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:gap-y-4 md:p-16"
           style={{
-            height: `${Math.floor(
-              deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.8),
-            )}px`,
-            width: `${Math.floor(
-              deviceSize.width * (deviceSize.width > 768 ? 0.7 : 0.8),
-            )}px`,
+            height,
+            width,
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-3/4 md:text-7xl">
@@ -175,6 +180,7 @@ const ProjectsSection = ({
                 <motion.img
                   className="h-10 w-10 md:h-14 md:w-14"
                   drag
+                  loading="lazy"
                   dragConstraints={refProject2}
                   dragElastic={0.1}
                   src={svg}
@@ -193,12 +199,8 @@ const ProjectsSection = ({
           ref={refProject3}
           className="relative mr-8 flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:mr-40 md:gap-y-4 md:p-16"
           style={{
-            height: `${Math.floor(
-              deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.8),
-            )}px`,
-            width: `${Math.floor(
-              deviceSize.width * (deviceSize.width > 768 ? 0.7 : 0.8),
-            )}px`,
+            height,
+            width,
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
@@ -243,6 +245,7 @@ const ProjectsSection = ({
                 <motion.img
                   className="h-10 w-10 md:h-14 md:w-14"
                   drag
+                  loading="lazy"
                   dragConstraints={refProject3}
                   dragElastic={0.1}
                   src={svg}
@@ -310,8 +313,6 @@ const marketVisitSVG = [
   sqlServer,
   sequelize,
 ];
-
-const randomXY = getRandomXY(marketVisitSVG.length);
 
 const marketVisitDesc =
   "This application is designed to assist in scheduling visits to branches and distributors and recording the results of those visits. Visit data can be uploaded in various formats, such as photos, PDFs, and Excel files, allowing for flexible information documentation. Additionally, the application is equipped with a sentiment analysis feature using a Transformer model to analyze responses from the annual survey.";
