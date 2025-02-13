@@ -60,7 +60,7 @@ const LoadingScreen = () => {
             ?.split("-")[0] // Remove suffix after the dash
             ?.replace(/[-_]/g, " ")
             ?.toUpperCase() || "UNKNOWN";
-
+        console.log("name", name);
         return (
           <motion.div
             key={index}
@@ -111,6 +111,7 @@ const LoadingScreen = () => {
             scaleX: 10,
             scaleY: 5,
             transition: {
+              willChange: "transform",
               duration: 0.5,
               ease: "easeOut",
               delay: (imgURLs.length + 1) * 1,
