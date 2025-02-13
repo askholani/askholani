@@ -7,7 +7,7 @@ import {
   useAnimation,
 } from "framer-motion";
 
-import { lazy, useCallback, useEffect, useRef, useState } from "react";
+import { lazy, useCallback, useEffect, useRef } from "react";
 
 const HeroImgSection = lazy(() => import("./HeroImgSection"));
 const HeroTextSection = lazy(() => import("./HeroTextSection"));
@@ -33,10 +33,10 @@ const Home = ({
 }: HomeProps) => {
   const controls = useAnimation();
 
-  const [deviceSize, setDeviceSize] = useState({
+  const deviceSize = {
     width: window.innerWidth,
     height: window.innerHeight,
-  });
+  };
 
   const totalWidth = deviceSize.width * 0.8 * 2 + 12;
   const totalWidthMd = deviceSize.width * 0.7 * 2 - 48;
