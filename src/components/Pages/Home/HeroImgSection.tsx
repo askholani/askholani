@@ -66,15 +66,6 @@ const HeroImgSection = ({
 
   const opacity = useTransform(heroTextSectionScroll, [0, 0.1], [1, 0]);
 
-  const skewXImg = useSpring(
-    useTransform(
-      heroTextSectionScroll,
-      [0, 0.2, 0.4, 0.6, 0.8, 1],
-      ["0deg", "7deg", "-7deg", "7deg", "-7deg", "7deg"],
-    ),
-    { stiffness: 150, damping: 25 },
-  );
-
   const translateYValues = {
     md: ["0px", "-300px", "-800px"],
     default: ["0px", "-400px", "-1000px"],
@@ -167,7 +158,6 @@ const HeroImgSection = ({
         initial="initial"
         animate="animate"
         style={{
-          skewX: skewXImg,
           scale: deviceSize.width > 768 ? 1 : 0.7,
           y: translateYImgSection1,
           filter: `blur(${section2InView ? "5px" : "0px"})`,

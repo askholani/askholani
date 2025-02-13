@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
+import maintaining from "../../assets/images/maintaining.webp";
+import creating from "../../assets/images/creating.webp";
+import collaborating from "../../assets/images/collaborating.webp";
 
-const imgURLs = [
-  "./images/collaborating.png",
-  "./images/creating.png",
-  "./images/maintaining.png",
-];
+const imgURLs = [collaborating, creating, maintaining];
+
 const screenHeight = "-" + (window.innerHeight / 2 - 100).toFixed(0) + "px";
 
 const parentVariants: Variants = {
@@ -78,7 +78,8 @@ const LoadingScreen = () => {
                   objectPosition: "center",
                   width: "100%",
                   height: "100%",
-                  transform: "scale(.9)",
+                  transform: "scale(.9) translate3d(0, 0, 0)",
+                  willChange: "transform",
                 }}
               />
             </div>
