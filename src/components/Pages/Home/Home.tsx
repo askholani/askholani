@@ -31,6 +31,10 @@ const Home = ({
   scrollToHome,
   scrollToWork,
 }: HomeProps) => {
+  // useEffect(() => {
+  //   console.log("hai");
+  // });
+
   const controls = useAnimation();
 
   const deviceSize = {
@@ -57,7 +61,9 @@ const Home = ({
   }, [scrollToHome, scrollToStartSection]);
 
   const section2Ref = useRef<HTMLDivElement | null>(null);
-  const section2InView = useInView(section2Ref, { amount: 0.2 });
+  // const section2InView = useInView(section2Ref, { amount: 0.2 });
+  const section2InView = useInView(section2Ref, { amount: 0.5, once: true });
+
   const { scrollYProgress: scrollSection2Progres } = useScroll({
     target: section2Ref,
     offset: ["start end", "end start"],
@@ -86,9 +92,28 @@ const Home = ({
       val > 0.7 || val <= 0.2 ? "text-slate-700" : "text-slate-100",
   );
 
+  // const transformedValue = useTransform(
+  //   scrollSection3Progress,
+  //   [0.2, 0.7],
+  //   [0, 1],
+  // );
+
+  // useEffect(() => {
+  //   const unsubscribe = transformedValue.on("change", (val) => {
+  //     const color = val > 0.5 ? "text-slate-700" : "text-slate-100";
+  //     // console.log("color", color);
+  //     handleNavColor(color);
+  //   });
+  //   return () => unsubscribe();
+  // }, [transformedValue, handleNavColor]);
+
+  // const projectTranslateX = useSpring(
+  //   useTransform(scrollSection3Progress, [0.3, 0.4], [0, -section2ScrollWidth]),
+  //   { stiffness: 300, damping: 50 },
+  // );
   const projectTranslateX = useSpring(
     useTransform(scrollSection3Progress, [0.3, 0.4], [0, -section2ScrollWidth]),
-    { stiffness: 300, damping: 50 },
+    { stiffness: 150, damping: 30 },
   );
 
   const section4TranslateY = useTransform(
@@ -129,9 +154,22 @@ const Home = ({
       onHoverChange(isHover);
     };
 
-    sections.forEach((section, index) => {
+    // sections.forEach((section, index) => {
+    //   if (!section) return;
+    //   section.addEventListener("pointerenter", handlePointerEnter(index === 1));
+    // });
+
+    sections.forEach((section) => {
       if (!section) return;
-      section.addEventListener("pointerenter", handlePointerEnter(index === 1));
+      const onEnter = () => onHoverChange(true);
+      const onLeave = () => onHoverChange(false);
+      section.addEventListener("pointerenter", onEnter);
+      section.addEventListener("pointerleave", onLeave);
+
+      return () => {
+        section.removeEventListener("pointerenter", onEnter);
+        section.removeEventListener("pointerleave", onLeave);
+      };
     });
 
     return () => {
