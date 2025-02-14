@@ -6,7 +6,7 @@ import {
   useTransform,
   Variants,
 } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface HeroImgSectionProps {
   deviceSize: { width: number; height: number };
@@ -28,57 +28,67 @@ const HeroImgSection = ({
   );
   const [hovering, setHovering] = useState(false);
 
+  const memoizedFirstString = useMemo(() => stringFirst.split(""), []);
+  const memoizedSecondString = useMemo(() => stringSecond.split(""), []);
+
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    const greetings = getRandomArrays(selamatDatang, 7);
+    let animationFrameId: number;
+
+    const updateDisplayText = () => {
+      setDisplayText((prev) => getRandomArraysLetter(prev));
+      animationFrameId = requestAnimationFrame(updateDisplayText);
+    };
 
     if (hovering) {
-      interval = setInterval(() => {
-        setDisplayText(getRandomArraysLetter(greetings));
-      }, 50);
+      animationFrameId = requestAnimationFrame(updateDisplayText);
     } else {
-      setDisplayText((prev) => {
-        return greetings || prev;
-      });
+      setDisplayText(getRandomArrays(selamatDatang, 6));
     }
 
-    return () => clearInterval(interval);
+    return () => cancelAnimationFrame(animationFrameId);
   }, [hovering]);
+
+  const translateYTarget = deviceSize.width > 768 ? "-71vh" : "-85vh";
+  const scaleTarget = deviceSize.width > 768 ? 0.25 : 0.5;
+  const translateXTarget = deviceSize.width > 768 ? "-45%" : "-35%";
 
   const translateY = useTransform(
     heroTextSectionScroll,
     [0, 0.1],
-    ["0vh", `${deviceSize.width > 768 ? "-71vh" : "-85vh"}`],
+    ["0vh", translateYTarget],
   );
 
-  const scale = useTransform(
-    heroTextSectionScroll,
-    [0, 0.1],
-    [1, `${deviceSize.width > 768 ? "0.25" : "0.5"}`],
-  );
+  const scale = useTransform(heroTextSectionScroll, [0, 0.1], [1, scaleTarget]);
 
   const translateX = useTransform(
     heroTextSectionScroll,
     [0, 0.1],
 
-    ["0%", `${deviceSize.width > 768 ? "-45%" : "-35%"}`],
+    ["0%", translateXTarget],
   );
 
   const opacity = useTransform(heroTextSectionScroll, [0, 0.1], [1, 0]);
 
-  const translateYValues = {
-    md: ["0px", "-300px", "-800px"],
-    default: ["0px", "-400px", "-1000px"],
-  };
+  // const translateYValues = {
+  //   md: ["0px", "-300px", "-800px"],
+  //   default: ["0px", "-400px", "-1000px"],
+  // };
+
+  // const translateYHeroImg =
+  //   deviceSize.width > 768 ? translateYValues.md : translateYValues.default;
+
+  // const translateYImgSection1 = useSpring(
+  //   useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
+  //   { stiffness: 100, damping: 25 },
+  // );
 
   const translateYHeroImg =
-    deviceSize.width > 768 ? translateYValues.md : translateYValues.default;
+    deviceSize.width > 768 ? [-0, -300, -800] : [0, -400, -1000];
 
   const translateYImgSection1 = useSpring(
     useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
-    { stiffness: 100, damping: 25 },
+    { stiffness: 80, damping: 20 }, // Lower stiffness & damping for smoother animations
   );
-
   return (
     <>
       <motion.div
@@ -116,7 +126,19 @@ const HeroImgSection = ({
             animate="animate"
           >
             <motion.div className="relative flex md:top-3">
-              {stringFirst.split("").map((str: string, i: number) => (
+              {/* {stringFirst.split("").map((str: string, i: number) => (
+                <motion.span
+                  key={i + str}
+                  style={{ display: "inline-block" }}
+                  className="overflow-hidden whitespace-nowrap"
+                  variants={stringFirstChildVariants}
+                  custom={i}
+                >
+                  {str}
+                </motion.span>
+              ))} */}
+
+              {memoizedFirstString.map((str, i) => (
                 <motion.span
                   key={i + str}
                   style={{ display: "inline-block" }}
@@ -129,7 +151,7 @@ const HeroImgSection = ({
               ))}
             </motion.div>
             <motion.div className="-md:top-3 relative flex">
-              {stringSecond.split("").map((str: string, i: number) => (
+              {memoizedSecondString.map((str, i) => (
                 <motion.span
                   key={i + str}
                   style={{ display: "inline-block" }}
@@ -140,6 +162,18 @@ const HeroImgSection = ({
                   {str}
                 </motion.span>
               ))}
+
+              {/* {stringSecond.split("").map((str: string, i: number) => (
+                <motion.span
+                  key={i + str}
+                  style={{ display: "inline-block" }}
+                  className="overflow-hidden whitespace-nowrap"
+                  variants={stringSecondChildVariants}
+                  custom={i}
+                >
+                  {str}
+                </motion.span>
+              ))} */}
             </motion.div>
           </motion.div>
         </motion.div>
@@ -157,9 +191,14 @@ const HeroImgSection = ({
         style={{
           scale: deviceSize.width > 768 ? 1 : 0.65,
           y: translateYImgSection1,
-          filter: `blur(${section2InView ? "5px" : "0px"})`,
-          willChange: "transform",
+          filter: section2InView ? "blur(5px)" : "none",
         }}
+
+        // style={{
+        //   transform: `translate3d(0, ${translateYImgSection1.get()}px, 0) scale(${deviceSize.width > 768 ? 1 : 0.65})`,
+        //   filter: section2InView ? "blur(5px)" : "none",
+        //   willChange: "transform",
+        // }}
       >
         <div
           className={`flex h-[25rem] w-[20rem] flex-col items-center justify-center gap-y-2 border-4 border-slate-700 px-1`}
