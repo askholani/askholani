@@ -155,9 +155,10 @@ const HeroImgSection = ({
         initial="initial"
         animate="animate"
         style={{
-          scale: deviceSize.width > 768 ? 1 : 0.7,
+          scale: deviceSize.width > 768 ? 1 : 0.65,
           y: translateYImgSection1,
           filter: `blur(${section2InView ? "5px" : "0px"})`,
+          willChange: "transform",
         }}
       >
         <div
