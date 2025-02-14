@@ -79,8 +79,6 @@ const HeroImgSection = ({
     { stiffness: 100, damping: 25 },
   );
 
-  // console.log("section2InView", section2InView);
-
   return (
     <>
       <motion.div
@@ -106,7 +104,6 @@ const HeroImgSection = ({
         >
           <ArrowDownIcon
             onClick={() => {
-              // console.log("hai");
               return scrollToEndSection();
             }}
             className="h-12 w-12 font-extrabold md:h-20 md:w-20"
@@ -166,11 +163,9 @@ const HeroImgSection = ({
         <div
           className={`flex h-[25rem] w-[20rem] flex-col items-center justify-center gap-y-2 border-4 border-slate-700 px-1`}
           onPointerEnter={() => {
-            // console.log("pointer enter");
             setHovering(true);
           }}
           onPointerLeave={() => {
-            // console.log("pointer leave");
             setHovering(false);
           }}
         >

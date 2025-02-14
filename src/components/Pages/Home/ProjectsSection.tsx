@@ -70,20 +70,8 @@ const ProjectsSection = ({
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
-            <motion.p
-              initial={intialProject}
-              animate={hasAnimatedRef ? animateProject : ""}
-              className="text-start"
-            >
-              ASSESSMENT
-            </motion.p>
-            <motion.p
-              initial={intialProjectN}
-              animate={hasAnimatedRef ? animateProject : ""}
-              className="text-end"
-            >
-              APPLICATION
-            </motion.p>
+            <motion.p className="text-start">ASSESSMENT</motion.p>
+            <motion.p className="text-end">APPLICATION</motion.p>
           </div>
           <div className="flex font-semibold md:w-4/5 md:text-lg">
             <motion.p
@@ -139,20 +127,8 @@ const ProjectsSection = ({
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-3/4 md:text-7xl">
-            <motion.p
-              initial={intialProject}
-              animate={hasAnimatedRef2 ? animateProject : ""}
-              className="text-start"
-            >
-              NEW EMPLOYMENT
-            </motion.p>
-            <motion.p
-              initial={intialProjectN}
-              animate={hasAnimatedRef2 ? animateProject : ""}
-              className="text-end"
-            >
-              APPLICATION
-            </motion.p>
+            <motion.p className="text-start">NEW EMPLOYMENT</motion.p>
+            <motion.p className="text-end">APPLICATION</motion.p>
           </div>
           <div className="flex font-semibold md:w-4/5 md:text-lg">
             <motion.p
@@ -204,20 +180,8 @@ const ProjectsSection = ({
           }}
         >
           <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
-            <motion.p
-              initial={intialProject}
-              animate={hasAnimatedRef3 ? animateProject : ""}
-              className="text-start"
-            >
-              MARKET VISIT
-            </motion.p>
-            <motion.p
-              initial={intialProjectN}
-              animate={hasAnimatedRef3 ? animateProject : ""}
-              className="text-end"
-            >
-              APPLICATION
-            </motion.p>
+            <motion.p className="text-start">MARKET VISIT</motion.p>
+            <motion.p className="text-end">APPLICATION</motion.p>
           </div>
           <div className="flex font-semibold md:w-4/5 md:text-lg">
             <motion.p
@@ -264,10 +228,6 @@ const ProjectsSection = ({
   );
 };
 
-const intialProject = {
-  opacity: 0,
-};
-
 const variantsProject: Variants = {
   initial: {
     opacity: 0,
@@ -280,18 +240,6 @@ const variantsProject: Variants = {
         delay: i * 0.05,
       },
     };
-  },
-};
-
-const intialProjectN = {
-  opacity: 0,
-};
-
-const animateProject = {
-  opacity: 1,
-  transition: {
-    duration: 0.5,
-    delay: 0.5,
   },
 };
 
