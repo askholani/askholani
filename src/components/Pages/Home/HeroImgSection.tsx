@@ -23,6 +23,8 @@ const HeroImgSection = ({
   navColor,
   section2InView,
 }: HeroImgSectionProps) => {
+  // console.log("section2InView", section2InView);
+
   const [displayText, setDisplayText] = useState<string[]>(
     getRandomArrays(selamatDatang, 6),
   );
@@ -69,12 +71,25 @@ const HeroImgSection = ({
 
   const opacity = useTransform(heroTextSectionScroll, [0, 0.1], [1, 0]);
 
+  // const translateYValues = {
+  //   md: ["0px", "-300px", "-800px"],
+  //   default: ["0px", "-400px", "-1000px"],
+  // };
+
+  // const translateYHeroImg =
+  //   deviceSize.width > 768 ? translateYValues.md : translateYValues.default;
+
+  // const translateYImgSection1 = useSpring(
+  //   useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
+  //   { stiffness: 100, damping: 25 },
+  // );
+
   const translateYHeroImg =
     deviceSize.width > 768 ? [-0, -300, -800] : [0, -400, -1000];
 
   const translateYImgSection1 = useSpring(
     useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
-    { stiffness: 80, damping: 20 },
+    { stiffness: 80, damping: 20 }, // Lower stiffness & damping for smoother animations
   );
   return (
     <>
@@ -178,8 +193,14 @@ const HeroImgSection = ({
         style={{
           scale: deviceSize.width > 768 ? 1 : 0.65,
           y: translateYImgSection1,
-          filter: section2InView ? "blur(5px)" : "none",
+          filter: section2InView ? "blur(5px)" : "blur(0px)",
         }}
+
+        // style={{
+        //   transform: `translate3d(0, ${translateYImgSection1.get()}px, 0) scale(${deviceSize.width > 768 ? 1 : 0.65})`,
+        //   filter: section2InView ? "blur(5px)" : "none",
+        //   willChange: "transform",
+        // }}
       >
         <div
           className={`flex h-[25rem] w-[20rem] flex-col items-center justify-center gap-y-2 border-4 border-slate-700 px-1`}

@@ -7,7 +7,7 @@ import {
   useAnimation,
 } from "framer-motion";
 
-import { lazy, useCallback, useEffect, useRef } from "react";
+import { lazy, useCallback, useEffect, useMemo, useRef } from "react";
 
 const HeroImgSection = lazy(() => import("./HeroImgSection"));
 const HeroTextSection = lazy(() => import("./HeroTextSection"));
@@ -31,19 +31,19 @@ const Home = ({
   scrollToHome,
   scrollToWork,
 }: HomeProps) => {
-  // useEffect(() => {
-  //   console.log("hai");
-  // });
-
   const controls = useAnimation();
 
-  const deviceSize = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
+  const deviceSize = useMemo(
+    () => ({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    }),
+    [],
+  );
 
   const totalWidth = deviceSize.width * 0.8 * 2 + 12;
   const totalWidthMd = deviceSize.width * 0.7 * 2 - 48;
+
   const section2ScrollWidth =
     deviceSize.width > 768 ? totalWidthMd : totalWidth;
 
@@ -61,8 +61,7 @@ const Home = ({
   }, [scrollToHome, scrollToStartSection]);
 
   const section2Ref = useRef<HTMLDivElement | null>(null);
-  // const section2InView = useInView(section2Ref, { amount: 0.2 });
-  const section2InView = useInView(section2Ref, { amount: 0.5, once: true });
+  const section2InView = useInView(section2Ref, { amount: 0.2 });
 
   const { scrollYProgress: scrollSection2Progres } = useScroll({
     target: section2Ref,
@@ -92,25 +91,6 @@ const Home = ({
       val > 0.7 || val <= 0.2 ? "text-slate-700" : "text-slate-100",
   );
 
-  // const transformedValue = useTransform(
-  //   scrollSection3Progress,
-  //   [0.2, 0.7],
-  //   [0, 1],
-  // );
-
-  // useEffect(() => {
-  //   const unsubscribe = transformedValue.on("change", (val) => {
-  //     const color = val > 0.5 ? "text-slate-700" : "text-slate-100";
-  //     // console.log("color", color);
-  //     handleNavColor(color);
-  //   });
-  //   return () => unsubscribe();
-  // }, [transformedValue, handleNavColor]);
-
-  // const projectTranslateX = useSpring(
-  //   useTransform(scrollSection3Progress, [0.3, 0.4], [0, -section2ScrollWidth]),
-  //   { stiffness: 300, damping: 50 },
-  // );
   const projectTranslateX = useSpring(
     useTransform(scrollSection3Progress, [0.3, 0.4], [0, -section2ScrollWidth]),
     { stiffness: 150, damping: 30 },
@@ -128,7 +108,6 @@ const Home = ({
   const scrollToEndSection = useCallback(async () => {
     await controls.start({ y: ["0vh", "-100vh"] });
     section4Ref.current?.scrollIntoView({ behavior: "smooth" });
-    // console.log("Scrolling to end section...");
   }, [controls]);
 
   useEffect(() => {
@@ -154,22 +133,9 @@ const Home = ({
       onHoverChange(isHover);
     };
 
-    // sections.forEach((section, index) => {
-    //   if (!section) return;
-    //   section.addEventListener("pointerenter", handlePointerEnter(index === 1));
-    // });
-
-    sections.forEach((section) => {
+    sections.forEach((section, index) => {
       if (!section) return;
-      const onEnter = () => onHoverChange(true);
-      const onLeave = () => onHoverChange(false);
-      section.addEventListener("pointerenter", onEnter);
-      section.addEventListener("pointerleave", onLeave);
-
-      return () => {
-        section.removeEventListener("pointerenter", onEnter);
-        section.removeEventListener("pointerleave", onLeave);
-      };
+      section.addEventListener("pointerenter", handlePointerEnter(index === 1));
     });
 
     return () => {
@@ -182,8 +148,6 @@ const Home = ({
       });
     };
   }, [onHoverChange]);
-
-  // console.log("hai hai");
 
   return (
     <div className={`relative flex flex-col`}>

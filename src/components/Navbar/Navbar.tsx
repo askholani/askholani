@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const Navbar = ({
   navColor,
@@ -17,19 +17,19 @@ const Navbar = ({
     return () => clearTimeout(timeout);
   }, []);
 
-  const newLink = navLinks.map((link) => ({
-    ...link,
-    method:
-      link.label === "Home"
-        ? scrollToHome
-        : link.label === "Work"
-          ? scrollToWork
-          : link.label === "Contact"
-            ? scrollToContact
-            : () => {},
-  }));
-
-  // console.log(newLink);
+  const newLink = useMemo(() => {
+    return navLinks.map((link) => ({
+      ...link,
+      method:
+        link.label === "Home"
+          ? scrollToHome
+          : link.label === "Work"
+            ? scrollToWork
+            : link.label === "Contact"
+              ? scrollToContact
+              : () => {},
+    }));
+  }, [scrollToHome, scrollToWork, scrollToContact]);
 
   return (
     <nav
@@ -139,4 +139,5 @@ const navChildVariants: Variants = {
   },
 };
 
-export default Navbar;
+// export default Navbar;
+export default React.memo(Navbar);

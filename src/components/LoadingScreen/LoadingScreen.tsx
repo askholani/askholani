@@ -31,7 +31,7 @@ const childVariants: Variants = {
   }),
 };
 const LoadingScreen = () => {
-  console.log("imgURLs", imgURLs);
+  // console.log("imgURLs", imgURLs);
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const LoadingScreen = () => {
             ?.split("-")[0] // Remove suffix after the dash
             ?.replace(/[-_]/g, " ")
             ?.toUpperCase() || "UNKNOWN";
-        console.log("name", name);
+        // console.log("name", name);
         return (
           <motion.div
             key={index}
