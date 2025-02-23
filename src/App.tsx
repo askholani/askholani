@@ -3,7 +3,6 @@ import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home";
 import Cursor from "./components/Cursor/Cursor";
-import ScrollYProgressComponent from "./components/Pages/Home/SrollYPrgress";
 
 export default function App() {
   const [isOverSection, setIsOverSection] = useState(false);
@@ -45,11 +44,9 @@ export default function App() {
     [handleScrollToHome, handleScrollToContact, handleScrollToWork],
   );
 
-  // console.log("isOverSection", isOverSection);
-
   return (
     <main className="text-slate-700">
-      {/* <LoadingScreen /> */}
+      <LoadingScreen />
       <Navbar
         {...scrollHandlers}
         navColor={navColor}
@@ -64,7 +61,6 @@ export default function App() {
         onHoverChange={setIsOverSection}
         navHeight={navHeight}
       />
-      {/* <ScrollYProgressComponent /> */}
       <Cursor isOverSection={isOverSection} />
     </main>
   );

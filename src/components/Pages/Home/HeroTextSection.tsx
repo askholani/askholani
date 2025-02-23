@@ -12,7 +12,6 @@ const HeroTextSection = () => {
   const opacityP3 = useScrollOpacity(ref3);
 
   return (
-    // <section ref={refSection} className="z-20 min-h-[100vh]">
     <div className="mx-8 my-4 flex w-[75%] flex-col gap-y-24 text-3xl font-extrabold md:mx-16 md:text-5xl">
       <motion.p ref={ref1} style={{ opacity: opacityP1 }}>
         I partner with businesses, brands, and entrepreneurs to develop digital

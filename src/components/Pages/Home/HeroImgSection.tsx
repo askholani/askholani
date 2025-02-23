@@ -66,10 +66,6 @@ const HeroImgSection = ({
       : `${vh * -1 + navHeight * 0.25}px`;
   }, [deviceSize, navHeight]);
 
-  // console.log("navHeight", navHeight);
-
-  // console.log(vh * -1 + "px");
-
   const scaleText = useMemo(
     () =>
       getResponsiveValue({
@@ -124,8 +120,6 @@ const HeroImgSection = ({
     useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
     { stiffness: 80, damping: 20 },
   );
-
-  // console.log("translateYTarget", translateYTarget);
 
   return (
     <>

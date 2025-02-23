@@ -24,7 +24,6 @@ const ProjectsSection = ({
   deviceSize,
   projectTranslateX,
 }: ProjectsSectionProps) => {
-  // console.log("projects.length", projects.length);
   const height = useMemo(
     () =>
       Math.floor(deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.75)),
@@ -51,14 +50,13 @@ const ProjectsSection = ({
 
   return (
     <div
-      // className={`min-h-[${deviceSize.height}px] sticky top-0 overflow-hidden px-8 pt-28 md:px-16 md:pt-36`}
-      className={`h-[${deviceSize.height}px] sticky top-0 overflow-hidden px-8 pt-28 md:px-16 md:pt-36`}
+      className={`h-[${deviceSize.height}px] sticky top-0 flex flex-col items-center justify-center px-8 pt-28 md:px-16 md:pt-36`}
     >
       <h2 className="pb-4 text-center text-3xl font-extrabold text-slate-100 md:text-5xl">
         SELECTED PROJECT
       </h2>
       <motion.div
-        className="relative flex gap-x-4 md:gap-x-16"
+        className="relative flex items-start justify-start gap-x-4 md:gap-x-16"
         style={{
           x: projectTranslateX,
         }}

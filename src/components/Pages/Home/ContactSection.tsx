@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useRef, useState } from "react";
-
-// import cv from "../Home/assets/cv.pdf";
 import cv from "../../../assets/cv.pdf";
 
 interface ContactSectionProps {
