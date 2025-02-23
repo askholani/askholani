@@ -119,7 +119,7 @@ const LoadingScreen = () => {
           }}
         ></motion.div>
 
-        <span className="my-2 capitalize tracking-wider">welcome</span>
+        <span className="my-2 uppercase tracking-wider">welcome</span>
       </motion.div>
     </motion.div>
   );

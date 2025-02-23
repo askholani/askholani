@@ -8,3 +8,17 @@ export function getRandomXY(length: number): { x: number; y: number }[] {
   }
   return arr;
 }
+
+interface GetResponsiveValueProps {
+  values: (number | string)[];
+  width: number;
+  breakpoints: number[];
+}
+
+export function getResponsiveValue({
+  values: [large, medium, small],
+  width,
+  breakpoints: [largeBp, mediumBp],
+}: GetResponsiveValueProps): number | string {
+  return width > largeBp ? large : width > mediumBp ? medium : small;
+}

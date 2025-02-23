@@ -1,13 +1,15 @@
 import { motion, Variants } from "framer-motion";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const Navbar = ({
   navColor,
   scrollToHome,
   scrollToContact,
   scrollToWork,
+  handleNavHeight,
 }: NavbarProps) => {
   const [isHidden, setIsHidden] = useState(true);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -16,6 +18,19 @@ const Navbar = ({
 
     return () => clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    if (navbarRef.current) {
+      handleNavHeight(navbarRef.current.offsetHeight);
+    }
+    const handleResize = () => {
+      if (navbarRef.current) {
+        handleNavHeight(navbarRef.current.offsetHeight);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleNavHeight]);
 
   const newLink = useMemo(() => {
     return navLinks.map((link) => ({
@@ -33,6 +48,7 @@ const Navbar = ({
 
   return (
     <nav
+      ref={navbarRef}
       className={`fixed left-0 right-0 top-0 z-50 flex items-start justify-between pb-4 pt-2 md:px-12 md:pt-8 ${
         isHidden ? "opacity-100" : "hidden opacity-0"
       } text-md font-semibold md:text-2xl ${navColor} px-4`}
@@ -96,6 +112,7 @@ interface NavbarProps {
   scrollToContact: () => void;
   scrollToWork: () => void;
   scrollToHome: () => void;
+  handleNavHeight: (heihgt: number) => void;
 }
 
 const gmailParentVariants: Variants = {

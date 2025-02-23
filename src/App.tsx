@@ -3,11 +3,14 @@ import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home";
 import Cursor from "./components/Cursor/Cursor";
+import ScrollYProgressComponent from "./components/Pages/Home/SrollYPrgress";
 
 export default function App() {
   const [isOverSection, setIsOverSection] = useState(false);
-
   const [navColor, setNavColor] = useState("text-slate-700");
+  const [navHeight, setNavHeight] = useState(0);
+
+  console.log("navHeight", navHeight);
 
   const handleNavColor = useCallback((color: string) => {
     setNavColor(color);
@@ -29,6 +32,10 @@ export default function App() {
     scrollToWorkRef.current?.();
   }, []);
 
+  const handleNavHeight = useCallback((height: number) => {
+    setNavHeight(height);
+  }, []);
+
   const scrollHandlers = useMemo(
     () => ({
       scrollToHome: handleScrollToHome,
@@ -42,15 +49,12 @@ export default function App() {
 
   return (
     <main className="text-slate-700">
-      <LoadingScreen />
-      {/* <Navbar
+      {/* <LoadingScreen /> */}
+      <Navbar
+        {...scrollHandlers}
         navColor={navColor}
-        scrollToHome={handleScrollToHome}
-        scrollToContact={handleScrollToContact}
-        scrollToWork={handleScrollToWork}
-      /> */}
-
-      <Navbar {...scrollHandlers} navColor={navColor} />
+        handleNavHeight={handleNavHeight}
+      />
       <Home
         scrollToContact={(ref) => (scrollToContactRef.current = ref)}
         scrollToWork={(ref) => (scrollToWorkRef.current = ref)}
@@ -58,7 +62,9 @@ export default function App() {
         handleNavColor={handleNavColor}
         navColor={navColor}
         onHoverChange={setIsOverSection}
+        navHeight={navHeight}
       />
+      {/* <ScrollYProgressComponent /> */}
       <Cursor isOverSection={isOverSection} />
     </main>
   );

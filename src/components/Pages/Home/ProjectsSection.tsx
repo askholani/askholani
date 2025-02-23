@@ -14,7 +14,6 @@ import sqlServer from "../../../assets/svg/Microsoft SQL Server.svg";
 import bootstrap from "../../../assets/svg/Bootstrap.svg";
 import sequelize from "../../../assets/svg/Sequelize.svg";
 import { useAnimationOnce } from "../../../hooks";
-import { getRandomXY } from "../../../utils";
 
 interface ProjectsSectionProps {
   deviceSize: { height: number; width: number };
@@ -25,7 +24,7 @@ const ProjectsSection = ({
   deviceSize,
   projectTranslateX,
 }: ProjectsSectionProps) => {
-  const randomXY = useMemo(() => getRandomXY(marketVisitSVG.length), []);
+  // console.log("projects.length", projects.length);
   const height = useMemo(
     () =>
       Math.floor(deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.75)),
@@ -38,6 +37,7 @@ const ProjectsSection = ({
   );
 
   const refProject1 = useRef(null);
+
   const hasAnimatedRef = useAnimationOnce(refProject1);
 
   const refProject2 = useRef(null);
@@ -46,9 +46,13 @@ const ProjectsSection = ({
   const refProject3 = useRef(null);
   const hasAnimatedRef3 = useAnimationOnce(refProject3);
 
+  const ref = [refProject1, refProject2, refProject3];
+  const hasAnmiated = [hasAnimatedRef, hasAnimatedRef2, hasAnimatedRef3];
+
   return (
     <div
-      className={`min-h-[${deviceSize.height}px] sticky top-0 min-w-full overflow-hidden pt-28 md:pt-36`}
+      // className={`min-h-[${deviceSize.height}px] sticky top-0 overflow-hidden px-8 pt-28 md:px-16 md:pt-36`}
+      className={`h-[${deviceSize.height}px] sticky top-0 overflow-hidden px-8 pt-28 md:px-16 md:pt-36`}
     >
       <h2 className="pb-4 text-center text-3xl font-extrabold text-slate-100 md:text-5xl">
         SELECTED PROJECT
@@ -57,172 +61,62 @@ const ProjectsSection = ({
         className="relative flex gap-x-4 md:gap-x-16"
         style={{
           x: projectTranslateX,
-          height: `${deviceSize.height}px`,
-          width: `${deviceSize.width}px`,
         }}
       >
-        <motion.div
-          ref={refProject1}
-          className="relative ml-8 flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:ml-40 md:gap-y-4 md:p-16"
-          style={{
-            height,
-            width,
-          }}
-        >
-          <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
-            <motion.p className="text-start">ASSESSMENT</motion.p>
-            <motion.p className="text-end">APPLICATION</motion.p>
-          </div>
-          <div className="flex font-semibold md:w-4/5 md:text-lg">
-            <motion.p
-              initial="initial"
-              animate={`${hasAnimatedRef ? "animate" : ""}`}
-              className="text-justify"
-            >
-              {assessmentDesc.split(" ").map((str: string, index: number) => (
-                <motion.span
-                  custom={index}
-                  variants={variantsProject}
-                  key={index}
-                >
-                  {str + " "}
-                </motion.span>
-              ))}
-            </motion.p>
-          </div>
-
-          <div
-            ref={refProject1}
-            className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end"
+        {projects.map((project, index) => (
+          <motion.div
+            ref={ref[index]}
+            className={`relative flex shrink-0 flex-col gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:gap-y-4 md:p-16`}
+            style={{
+              height,
+              width,
+            }}
           >
-            {assessmentSVG.map((svg, index) => (
-              <div
-                key={index}
-                className="flex cursor-pointer items-center justify-start"
+            <div className="flex flex-col text-3xl font-extrabold md:w-11/12 md:text-6xl xl:w-4/5 xl:text-7xl">
+              <motion.p className="text-start">{project.title1}</motion.p>
+              <motion.p className="text-end">{project.title2}</motion.p>
+            </div>
+            <div className="flex font-semibold md:w-11/12 md:text-lg xl:w-4/5">
+              <motion.p
+                initial="initial"
+                animate={`${hasAnmiated[index] ? "animate" : ""}`}
+                className="text-justify"
               >
-                <motion.img
-                  className="h-10 w-10 md:h-14 md:w-14"
-                  drag
-                  loading="lazy"
-                  dragConstraints={refProject1}
-                  dragElastic={0.1}
-                  src={svg}
-                  alt={`assessment-icon-${index}`}
-                  style={{
-                    x: randomXY[index].x,
-                    y: randomXY[index].y,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </motion.div>
+                {project.desc.split(" ").map((str: string, index: number) => (
+                  <motion.span
+                    custom={index}
+                    variants={variantsProject}
+                    key={index}
+                  >
+                    {str + " "}
+                  </motion.span>
+                ))}
+              </motion.p>
+            </div>
 
-        <motion.div
-          ref={refProject2}
-          className="relative flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:gap-y-4 md:p-16"
-          style={{
-            height,
-            width,
-          }}
-        >
-          <div className="flex flex-col text-3xl font-extrabold md:w-3/4 md:text-7xl">
-            <motion.p className="text-start">NEW EMPLOYMENT</motion.p>
-            <motion.p className="text-end">APPLICATION</motion.p>
-          </div>
-          <div className="flex font-semibold md:w-4/5 md:text-lg">
-            <motion.p
-              initial="initial"
-              animate={`${hasAnimatedRef2 ? "animate" : ""}`}
-              className="text-justify"
+            <div
+              ref={ref[index]}
+              className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end"
             >
-              {neopDesc.split(" ").map((str: string, index: number) => (
-                <motion.span
-                  custom={index}
-                  variants={variantsProject}
+              {project.svg.map((svg, index) => (
+                <div
                   key={index}
+                  className="flex cursor-pointer items-center justify-start"
                 >
-                  {str + " "}
-                </motion.span>
+                  <motion.img
+                    className="h-10 w-10 md:h-14 md:w-14"
+                    drag
+                    loading="lazy"
+                    dragConstraints={ref[index]}
+                    dragElastic={0.1}
+                    src={svg}
+                    alt={`assessment-icon-${index}`}
+                  />
+                </div>
               ))}
-            </motion.p>
-          </div>
-          <div className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end">
-            {neopSVG.map((svg, index) => (
-              <div
-                key={index}
-                className="flex cursor-pointer items-center justify-start"
-              >
-                <motion.img
-                  className="h-10 w-10 md:h-14 md:w-14"
-                  drag
-                  loading="lazy"
-                  dragConstraints={refProject2}
-                  dragElastic={0.1}
-                  src={svg}
-                  alt={`new-employment-icon-${index}`}
-                  style={{
-                    x: randomXY[index].x,
-                    y: randomXY[index].y,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          ref={refProject3}
-          className="relative mr-8 flex shrink-0 flex-col gap-x-8 gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:mr-40 md:gap-y-4 md:p-16"
-          style={{
-            height,
-            width,
-          }}
-        >
-          <div className="flex flex-col text-3xl font-extrabold md:w-2/3 md:text-7xl">
-            <motion.p className="text-start">MARKET VISIT</motion.p>
-            <motion.p className="text-end">APPLICATION</motion.p>
-          </div>
-          <div className="flex font-semibold md:w-4/5 md:text-lg">
-            <motion.p
-              initial="initial"
-              animate={`${hasAnimatedRef3 ? "animate" : ""}`}
-              className="text-justify"
-            >
-              {marketVisitDesc.split(" ").map((str: string, index: number) => (
-                <motion.span
-                  custom={index}
-                  variants={variantsProject}
-                  key={index}
-                >
-                  {str + " "}
-                </motion.span>
-              ))}
-            </motion.p>
-          </div>
-          <div className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end">
-            {marketVisitSVG.map((svg, index) => (
-              <div
-                key={index}
-                className="flex cursor-pointer items-center justify-start"
-              >
-                <motion.img
-                  className="h-10 w-10 md:h-14 md:w-14"
-                  drag
-                  loading="lazy"
-                  dragConstraints={refProject3}
-                  dragElastic={0.1}
-                  src={svg}
-                  alt={`market-visit-icon-${index}`}
-                  style={{
-                    x: randomXY[index].x,
-                    y: randomXY[index].y,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        ))}
       </motion.div>
     </div>
   );
@@ -264,3 +158,24 @@ const marketVisitSVG = [
 
 const marketVisitDesc =
   "This application is designed to assist in scheduling visits to branches and distributors and recording the results of those visits. Visit data can be uploaded in various formats, such as photos, PDFs, and Excel files, allowing for flexible information documentation. Additionally, the application is equipped with a sentiment analysis feature using a Transformer model to analyze responses from the annual survey.";
+
+const projects = [
+  {
+    desc: assessmentDesc,
+    svg: assessmentSVG,
+    title1: "ASSESSMENT",
+    title2: "APPLICATION",
+  },
+  {
+    desc: neopDesc,
+    svg: neopSVG,
+    title1: "NEW EMPLOYMENT",
+    title2: "APPLICATION",
+  },
+  {
+    desc: marketVisitDesc,
+    svg: marketVisitSVG,
+    title1: "MARKET VISIT",
+    title2: "APPLICATION",
+  },
+];
