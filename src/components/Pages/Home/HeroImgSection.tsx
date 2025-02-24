@@ -139,7 +139,7 @@ const HeroImgSection = ({
             y: 0,
             transition: {
               duration: 0.8,
-              delay: 7.5,
+              delay: 2.5,
             },
           }}
         >
@@ -242,7 +242,7 @@ const stringFirstChildVariants: Variants = {
       transition: {
         duration: 0.8,
         ease: "backIn",
-        delay: delay + 6,
+        delay: delay + 1,
 
         damping: 10,
         mass: 1,
@@ -264,7 +264,7 @@ const stringSecondChildVariants: Variants = {
       transition: {
         duration: 1,
         ease: "backIn",
-        delay: delay + 6,
+        delay: delay + 1,
       },
     };
   },
@@ -280,7 +280,7 @@ const imgVariants: Variants = {
     opacity: 1,
     rotate: 2,
     x: "-10%",
-    transition: { duration: 1, delay: 7 },
+    transition: { duration: 1 },
   },
 };
 

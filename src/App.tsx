@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home";
@@ -9,6 +9,15 @@ export default function App() {
   const [isOverSection, setIsOverSection] = useState(false);
   const [navColor, setNavColor] = useState("text-slate-700");
   const [navHeight, setNavHeight] = useState(0);
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsHidden(true);
+    }, 4800);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleNavColor = useCallback((color: string) => {
     setNavColor(color);
@@ -43,25 +52,31 @@ export default function App() {
     [handleScrollToHome, handleScrollToContact, handleScrollToWork],
   );
 
+  // console.log("isHidden", isHidden);
+
   return (
-    <main className="text-slate-700">
-      <LoadingScreen />
-      <Navbar
-        {...scrollHandlers}
-        navColor={navColor}
-        handleNavHeight={handleNavHeight}
-      />
-      <Home
-        scrollToContact={(ref) => (scrollToContactRef.current = ref)}
-        scrollToWork={(ref) => (scrollToWorkRef.current = ref)}
-        scrollToHome={(ref) => (scrollToHomeRef.current = ref)}
-        handleNavColor={handleNavColor}
-        navColor={navColor}
-        onHoverChange={setIsOverSection}
-        navHeight={navHeight}
-      />
-      <Cursor isOverSection={isOverSection} />
-      <Footer />
-    </main>
+    <>
+      {!isHidden && <LoadingScreen isHidden={isHidden} />}
+      {isHidden && (
+        <main className="text-slate-700">
+          <Navbar
+            {...scrollHandlers}
+            navColor={navColor}
+            handleNavHeight={handleNavHeight}
+          />
+          <Home
+            scrollToContact={(ref) => (scrollToContactRef.current = ref)}
+            scrollToWork={(ref) => (scrollToWorkRef.current = ref)}
+            scrollToHome={(ref) => (scrollToHomeRef.current = ref)}
+            handleNavColor={handleNavColor}
+            navColor={navColor}
+            onHoverChange={setIsOverSection}
+            navHeight={navHeight}
+          />
+          <Cursor isOverSection={isOverSection} />
+          <Footer />
+        </main>
+      )}
+    </>
   );
 }

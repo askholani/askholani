@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
 const Navbar = ({
   navColor,
@@ -8,16 +8,7 @@ const Navbar = ({
   scrollToWork,
   handleNavHeight,
 }: NavbarProps) => {
-  const [isHidden, setIsHidden] = useState(true);
   const navbarRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsHidden(true);
-    }, 4800);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   useEffect(() => {
     if (navbarRef.current) {
@@ -49,9 +40,7 @@ const Navbar = ({
   return (
     <nav
       ref={navbarRef}
-      className={`fixed left-0 right-0 top-0 z-50 flex items-start justify-between pb-4 pt-2 md:px-12 md:pt-8 ${
-        isHidden ? "opacity-100" : "hidden opacity-0"
-      } text-md font-semibold md:text-2xl ${navColor} px-4`}
+      className={`} text-md fixed left-0 right-0 top-0 z-50 flex items-start justify-between pb-4 pt-2 font-semibold md:px-12 md:pt-8 md:text-2xl ${navColor} px-4`}
     >
       <motion.h1
         style={{ transform: "translateY(-10px)" }}
@@ -119,7 +108,7 @@ const gmailParentVariants: Variants = {
   animate: {
     transition: {
       staggerChildren: 0.05,
-      delayChildren: 4.8,
+      delayChildren: 0.4,
     },
   },
 };
@@ -140,7 +129,7 @@ const navParentVariants: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 4.8,
+      delayChildren: 0.4,
     },
   },
 };
@@ -156,5 +145,4 @@ const navChildVariants: Variants = {
   },
 };
 
-// export default Navbar;
 export default React.memo(Navbar);

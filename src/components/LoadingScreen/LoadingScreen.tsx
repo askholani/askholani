@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import maintaining from "../../assets/images/maintaining.webp";
 import creating from "../../assets/images/creating.webp";
@@ -30,17 +29,12 @@ const childVariants: Variants = {
     },
   }),
 };
-const LoadingScreen = () => {
-  const [isHidden, setIsHidden] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsHidden(true);
-    }, 4800);
+interface LoadingScreenProps {
+  isHidden: boolean;
+}
 
-    return () => clearTimeout(timeout);
-  }, []);
-
+const LoadingScreen = ({ isHidden }: LoadingScreenProps) => {
   return (
     <motion.div
       className={`fixed bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-secondary transition-all duration-500 ${
