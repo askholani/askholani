@@ -87,10 +87,6 @@ const Home = ({
       val > 0.85 || val <= 0.09 ? "text-slate-700" : "text-slate-100",
   );
 
-  useTransform(scrollSection3Progress, (val) => {
-    console.log(val);
-  });
-
   const section2ScrollWidth = Math.floor(
     deviceSize.width * (deviceSize.width > 768 ? 0.7 : 0.8),
   );
@@ -184,8 +180,7 @@ const Home = ({
 
         <motion.section
           ref={section4Ref}
-          className="absolute bottom-0 z-30 flex h-[100vh] w-full flex-col overflow-hidden bg-slate-100 px-4 pt-28 md:px-24 md:pt-36"
-          style={{}}
+          className="absolute bottom-0 z-30 flex h-[95vh] w-full flex-col overflow-hidden bg-slate-100 px-4 pt-28 md:px-24 md:pt-36"
         >
           <ContactSection
             scrollToStartSection={scrollToStartSection}

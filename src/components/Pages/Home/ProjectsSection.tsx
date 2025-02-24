@@ -26,8 +26,8 @@ const ProjectsSection = ({
 }: ProjectsSectionProps) => {
   const height = useMemo(
     () =>
-      Math.floor(deviceSize.height * (deviceSize.height > 768 ? 0.7 : 0.75)),
-    [deviceSize.height],
+      Math.floor(deviceSize.height * (deviceSize.width > 768 ? 0.65 : 0.75)),
+    [deviceSize.width, deviceSize.height],
   );
 
   const width = useMemo(
@@ -50,7 +50,7 @@ const ProjectsSection = ({
 
   return (
     <div
-      className={`h-[${deviceSize.height}px] sticky top-0 flex flex-col items-center justify-center px-8 pt-28 md:px-16 md:pt-36`}
+      className={`h-[${deviceSize.height}px] sticky top-0 flex flex-col items-center justify-center overflow-hidden px-8 pt-28 md:px-16 md:pt-36`}
     >
       <h2 className="pb-4 text-center text-3xl font-extrabold text-slate-100 md:text-5xl">
         SELECTED PROJECT
@@ -61,23 +61,24 @@ const ProjectsSection = ({
           x: projectTranslateX,
         }}
       >
-        {projects.map((project, index) => (
+        {projects.map((project, mainIndex) => (
           <motion.div
-            ref={ref[index]}
-            className={`relative flex shrink-0 flex-col gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:gap-y-4 md:p-16`}
+            key={mainIndex}
+            ref={ref[mainIndex]}
+            className={`relative flex shrink-0 flex-col gap-y-2 rounded-md border border-slate-100 bg-slate-700 p-2 text-slate-100 shadow-md md:gap-y-4 md:p-8 xl:p-16`}
             style={{
               height,
               width,
             }}
           >
-            <div className="flex flex-col text-3xl font-extrabold md:w-11/12 md:text-6xl xl:w-4/5 xl:text-7xl">
+            <div className="flex flex-col text-3xl font-extrabold md:w-11/12 md:text-6xl xl:w-4/5">
               <motion.p className="text-start">{project.title1}</motion.p>
               <motion.p className="text-end">{project.title2}</motion.p>
             </div>
-            <div className="flex font-semibold md:w-11/12 md:text-lg xl:w-4/5">
+            <div className="flex font-semibold md:text-lg xl:w-10/12">
               <motion.p
                 initial="initial"
-                animate={`${hasAnmiated[index] ? "animate" : ""}`}
+                animate={`${hasAnmiated[mainIndex] ? "animate" : ""}`}
                 className="text-justify"
               >
                 {project.desc.split(" ").map((str: string, index: number) => (
@@ -93,7 +94,7 @@ const ProjectsSection = ({
             </div>
 
             <div
-              ref={ref[index]}
+              ref={ref[mainIndex]}
               className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end"
             >
               {project.svg.map((svg, index) => (
@@ -105,7 +106,7 @@ const ProjectsSection = ({
                     className="h-10 w-10 md:h-14 md:w-14"
                     drag
                     loading="lazy"
-                    dragConstraints={ref[index]}
+                    dragConstraints={ref[mainIndex]}
                     dragElastic={0.1}
                     src={svg}
                     alt={`assessment-icon-${index}`}

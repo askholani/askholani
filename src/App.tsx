@@ -3,13 +3,12 @@ import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Pages/Home/Home";
 import Cursor from "./components/Cursor/Cursor";
+import Footer from "./components/Footer/Footer";
 
 export default function App() {
   const [isOverSection, setIsOverSection] = useState(false);
   const [navColor, setNavColor] = useState("text-slate-700");
   const [navHeight, setNavHeight] = useState(0);
-
-  console.log("navHeight", navHeight);
 
   const handleNavColor = useCallback((color: string) => {
     setNavColor(color);
@@ -62,6 +61,7 @@ export default function App() {
         navHeight={navHeight}
       />
       <Cursor isOverSection={isOverSection} />
+      <Footer />
     </main>
   );
 }

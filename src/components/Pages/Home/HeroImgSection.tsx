@@ -107,18 +107,17 @@ const HeroImgSection = ({
   const translateX = useTransform(
     heroTextSectionScroll,
     [0, 0.1],
-
     ["0%", translateXText],
   );
 
   const opacity = useTransform(heroTextSectionScroll, [0, 0.1], [1, 0]);
 
   const translateYHeroImg =
-    deviceSize.width > 768 ? [-0, -300, -800] : [0, -400, -1000];
+    deviceSize.width > 768 ? [-0, -200, -800] : [0, -300, -1000];
 
   const translateYImgSection1 = useSpring(
-    useTransform(heroTextSectionScroll, [0.25, 0.85, 0.9], translateYHeroImg),
-    { stiffness: 80, damping: 20 },
+    useTransform(heroTextSectionScroll, [0.25, 0.75, 0.8], translateYHeroImg),
+    { stiffness: 120, damping: 20, mass: 0.8 },
   );
 
   return (
