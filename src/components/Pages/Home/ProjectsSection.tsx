@@ -97,22 +97,23 @@ const ProjectsSection = ({
               ref={ref[mainIndex]}
               className="absolute bottom-5 mx-2 flex flex-wrap justify-start gap-4 md:right-5 md:justify-end"
             >
-              {project.svg.map((svg, index) => (
-                <div
-                  key={index}
-                  className="flex cursor-pointer items-center justify-start"
-                >
-                  <motion.img
-                    className="h-10 w-10 md:h-14 md:w-14"
-                    drag
-                    loading="lazy"
-                    dragConstraints={ref[mainIndex]}
-                    dragElastic={0.1}
-                    src={svg}
-                    alt={`assessment-icon-${index}`}
-                  />
-                </div>
-              ))}
+              {deviceSize.width >= 500 &&
+                project.svg.map((svg, index) => (
+                  <div
+                    key={index}
+                    className="flex cursor-pointer items-center justify-start"
+                  >
+                    <motion.img
+                      className="h-10 w-10 md:h-14 md:w-14"
+                      drag
+                      loading="lazy"
+                      dragConstraints={ref[mainIndex]}
+                      dragElastic={0.1}
+                      src={svg}
+                      alt={`assessment-icon-${index}`}
+                    />
+                  </div>
+                ))}
             </div>
           </motion.div>
         ))}

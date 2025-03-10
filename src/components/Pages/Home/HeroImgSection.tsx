@@ -99,7 +99,7 @@ const HeroImgSection = ({
   const translateY = useTransform(
     heroTextSectionScroll,
     [0, 0.1],
-    ["0vh", translateYTarget],
+    ["0vh", deviceSize.width < 500 ? "-200vh" : translateYTarget],
   );
 
   const scale = useTransform(heroTextSectionScroll, [0, 0.1], [1, scaleText]);
@@ -126,6 +126,7 @@ const HeroImgSection = ({
         className="fixed bottom-0 left-[5%] z-50 flex"
         style={{
           y: translateY,
+
           scale,
           x: translateX,
         }}
